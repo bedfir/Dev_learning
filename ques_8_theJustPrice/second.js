@@ -1,9 +1,9 @@
-const theJustPrice = document.querySelector('#theJustPrice');
-const inputPrice = document.querySelector('#inputPrice');
-const myImg = document.querySelector('#myImg');
-const imgTitle = document.querySelector('#imgTitle');
+const attempt = document.querySelector('#attempt');
+const message = document.querySelector('#message');
+const btn = document.querySelector('#btn');
+let attemptNb = 10;
+let priceMystere = Math.floor(Math.random() * 100) + 1;
 
-let count = 0;
 const imgObject = [{
         name: 'Chaise',
         imgFile: './image-juste-prix/chaise.png',
@@ -11,7 +11,7 @@ const imgObject = [{
     },
     {
         name: 'Costume Halowen',
-        imgFile: './image-juste-prix/Costume-Halowen.png',
+        imgFile: './image-juste-prix/costume-Haloween.png',
         imgAlt: 'Costume-Halowen'
     },
     {
@@ -30,39 +30,46 @@ const imgObject = [{
         imgAlt: 'sac a main'
     },
 ];
-myImg.src = imgObject[0].imgFile;
-    myImg.alt = imgObject[0].imgAlt;
-    imgTitle.textContent = imgObject[0].name;
-    discription.textContent = `Trouver le prix de l'objet ${imgObject[0].name} entre 1 ET 100 €, Attention Vous avez seulement 10 tentative pour 5 objet a trouver !`;
+const myImg = document.querySelector('img');
+const imgTitle = document.querySelector('#imgTitle');
+const discription = document.querySelector('#discription');
 
-const theJustPriceGame = (e) => {
+let imgRandom = Math.floor(Math.random() * 5);
+myImg.src = imgObject[imgRandom].imgFile;
+myImg.alt = imgObject[imgRandom].imgAlt;
+imgTitle.textContent = imgObject[imgRandom].name;
+discription.textContent = `Proposer un prix entre 1 et 100 €. Tantez votre chance et Gangez : ${imgObject[imgRandom].name} `;
+attempt.textContent = `Il vous reste ${attemptNb} tentatives`
 
-    const discription = document.querySelector('#discription');
-    const message = document.querySelector('#message');
-    let priceValue = Math.floor(Math.random() * 100) + 1;
-    count++;
-    e.preventDefault();
-    let findThePrice = inputPrice.value == priceValue;
-    let maxAttempt = count < 10;
-    let winner = findThePrice == imgObject.length;
-    let nextImg = 0;
 
-    while (count < 10) {
-        
-        if (findThePrice) {
-            myImg.src = imgObject[nextImg].imgFile;
-            myImg.alt = imgObject[nextImg].imgAlt;
-            imgTitle.textContent = imgObject[nextImg].name;
-            nextImg++;
-            console.log("je trouve");
-        } else if (winner) {
-            console.log('je gagne');
-        } else {
-            console.log('je perd');
+
+
+const verifierProposition = () => {
+    const inputPrice = document.querySelector('#inputPrice').value;
+    if (attemptNb == 0) {
+        attempt.textContent = `Il vous reste ${attemptNb} tentatives`
+        message.classList.add('alert', 'alert-danger', 'text-center');
+        message.innerHTML = `Désolé, vous avez perdu ! <br> Le juste prix était de ${priceMystere} €`;
+        btn.disabled = true;
+        console.log(inputPrice.value);
+    } else {
+        message.classList.add('alert', 'alert-success', 'text-center', 'mt-5');
+        if (inputPrice > priceMystere) {
+            message.textContent = 'C\'est moins !';
+            attemptNb--;
+            attempt.textContent = `Il vous reste ${attemptNb} tentatives`
         }
-        console.log(count ++);
+        if (inputPrice < priceMystere) {
+            message.textContent = 'C\'est plus !';
+            attemptNb--;
+            attempt.textContent = `Il vous reste ${attemptNb} tentatives`
+        }
+        if (inputPrice == priceMystere) {
+            message.textContent = 'Bravo vous avez gagné !';
+            attemptNb--;
+            attempt.textContent = `En ${attemptNb} tentatives`
+            btn.disabled = true;
+        }
     }
-    
-
 }
-theJustPrice.addEventListener('submit', theJustPriceGame);
+btn.addEventListener('click', verifierProposition, false);
