@@ -44,7 +44,7 @@ attempt.textContent = `Il vous reste ${attemptNb} tentatives`
 
 
 
-const verifierProposition = () => {
+const verifierProposition = (e) => {
     const inputPrice = document.querySelector('#inputPrice').value;
     if (attemptNb == 0) {
         attempt.textContent = `Il vous reste ${attemptNb} tentatives`
@@ -66,10 +66,12 @@ const verifierProposition = () => {
         }
         if (inputPrice == priceMystere) {
             message.textContent = 'Bravo vous avez gagné !';
+            message.innerHTML = `<video width="320" height="240" autoplay> <source src="https://www.youtube.com/watch?v=4Csi0U8c-LA" type="video/mp4"></video>`
             attemptNb--;
             attempt.textContent = `En ${attemptNb} tentatives`
             btn.disabled = true;
         }
     }
+    e.preventDefault();
 }
 btn.addEventListener('click', verifierProposition, false);
