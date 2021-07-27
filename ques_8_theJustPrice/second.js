@@ -51,7 +51,16 @@ const verifierProposition = (e) => {
         message.classList.add('alert', 'alert-danger', 'text-center');
         message.innerHTML = `Désolé, vous avez perdu ! <br> Le juste prix était de ${priceMystere} €`;
         btn.disabled = true;
-        console.log(inputPrice.value);
+        let node = document.createElement('iframe');
+        node.setAttribute('id', 'Player');
+        node.setAttribute('title', 'YouTube video player');
+        node.setAttribute('frameborder', '0');
+        node.setAttribute('allowfullscreen', '1');
+        node.setAttribute('allow', 'autoplay');
+        node.setAttribute('width', '640');
+        node.setAttribute('height', '264');
+        node.setAttribute('src',"https://www.youtube.com/embed/4QXYlpDqD0g");
+        document.getElementById('video').append(node);
     } else {
         message.classList.add('alert', 'alert-success', 'text-center', 'mt-5');
         if (inputPrice > priceMystere) {
