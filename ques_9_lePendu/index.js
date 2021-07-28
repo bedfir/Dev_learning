@@ -27,7 +27,7 @@ const init = () => {
     // console.log(word);
     //  - word mapping
     wordMapping = getWordMapping(word);
-    // console.log(wordMapping);
+    console.log(wordMapping);
     //generate choices
     choices = generateChoices();
     // console.log(choices);
@@ -42,16 +42,38 @@ const init = () => {
     displayScore();
     // listen events
     //      - mouse events 
+    els.choices.addEventListener('click', ({ target }) => {
+        // evt.target =>  { target }
+        if (target.matches('li')) {
+            checkLetter(target.innerHTML);
+        }
+    });
     //      - keyboard events
+    document.addEventListener('keydown', ({ keyCode }) => {
+        // evt.keyboardEvent evt.keyCode => { keyCode }
+        const letter = String.fromCharCode(keyCode);
+        if (keyCode >= 65 && keyCode <= 90) {
+            checkLetter(letter);
+        }
+        
+    });
+
+};
     // check letter
     // - If not in word: add score
     // - If in word: display letter
     // - endGame
     //      - if score == max: loseGame
     //      - if letter are visible : winGame
-
+const checkLetter = (letter) => {
+    console.log(letter);
+    let isLetterInWord = false;
+    wordMapping.forEach(() => {
+        if (letterMapping.letter === letter) {
+            letterMapping.isVisible = true;
+            isLetterInWord = true;
+        }
+    });
 };
-
-
 
 window.addEventListener('load', init);
