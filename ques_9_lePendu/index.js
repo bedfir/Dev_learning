@@ -12,6 +12,8 @@ let choices = [];
 let choicesMapping = [];
 let word = '';
 let wordMapping = [];
+let scoreCount = 0;
+let scoreMax = 8;
 
 
 const init = () => {
@@ -35,8 +37,9 @@ const init = () => {
     //display word
     displayWord(wordMapping);
     //display choices
-    displayChoices(choicesMapping)
+    displayChoices(choicesMapping);
     //display score
+    displayScore();
     // listen events
     //      - mouse events 
     //      - keyboard events
@@ -50,67 +53,5 @@ const init = () => {
 };
 
 
-const displayChoices = (choicesMapping) => {
-    const choicesHtml = choicesMapping.map((letterMapping) => {
-        if (letterMapping.isChosen === false) {
-            return `<li>${letterMapping.letter}</li>`;
-        } else {
-            return `<li class="disabled">${letterMapping.letter}</li>`
-        }
-    });
-    els.choices.querySelector('ul').innerHTML = choicesHtml.join('');
-};
-
-const displayWord = (wordMapping) => {
-    const wordHtml = wordMapping.map((letterMapping) => {
-        if (letterMapping.isVisible === true) {
-            return `<li>${letterMapping.letter}</li>`;
-        } else {
-            return `<li>_</li>`;
-        }
-    });
-
-    els.answer.querySelector('ul').innerHTML = wordHtml.join('');
-};
-
-const generateChoices = () => {
-    const choices = [];
-    for(let i = 65; i <= 90; i++) {
-        choices.push(String.fromCharCode(i));
-    }
-    return choices;
-};
-
-const getChoicesMapping = (choices) => {
-    const choicesMapping = choices.map((letter) => {
-        return {
-            letter,
-            isChosen: false
-        };
-    });
-    return choicesMapping;
-};
-
-const getRandomInt = (min, max) => {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-};
-
-const getWordMapping = (word) => {
-    const wordArr = word.split('');
-    const wordMapping = wordArr.map((letter) => {
-        return {
-            letter,
-            isVisible: false
-        };
-    });
-    return wordMapping;
-};
-
-const pickWord = () => {
-    let getRandomWord = getRandomInt(0, words.length - 1);
-    return words[getRandomWord];
-};
 
 window.addEventListener('load', init);
