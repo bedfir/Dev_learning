@@ -1,0 +1,17 @@
+body {
+    width: 75%;
+    margin: 0 auto;
+    padding: 20px;
+}
+li {
+    list-style-type: none;
+    background-color: tomato;
+    padding: 5px;
+    margin: 5px;
+    text-align: center;
+    width: 130px;
+}
+ul {
+    display: flex;
+    flex-flow: wrap;
+}
