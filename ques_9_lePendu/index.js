@@ -5,7 +5,7 @@ const els = {
 };
 
 const words = [
-    'recongelassent', 'anesthésieront', 'submergeassent', /* 'renvenimassiez', 'réassortissent', 'échantillonnez', 'temporisassiez', 'désaltérassent', 'squattériserai', 'dénonciatrices', 'reconnaîtrions', 'fainéanterions', 'ressouvinssent', 'réaménageasses', 'déchaperonnées', 'désapparierais', 'désemprisonnez', 'pétaraderaient', 'surexcitations', 'décapellerions', 'sclérosassions', 'symbolisations', 'fluidifiassiez', 'hématologistes', 'signifieraient', 'confusionnelle', 'écorniflerions', 'engrossassions', 'désambiguïsons', 'dévitrifieront', 'dépolarisaient', 'croustillèrent', 'dindonneraient', 'retranscrirais', 'dépassionnerez', 'proverbialisez', 'divisionnaires', 'dodécasyllabes', */
+    'JAVASCRIPT', 'anesthésieront', 'submergeassent', /* 'renvenimassiez', 'réassortissent', 'échantillonnez', 'temporisassiez', 'désaltérassent', 'squattériserai', 'dénonciatrices', 'reconnaîtrions', 'fainéanterions', 'ressouvinssent', 'réaménageasses', 'déchaperonnées', 'désapparierais', 'désemprisonnez', 'pétaraderaient', 'surexcitations', 'décapellerions', 'sclérosassions', 'symbolisations', 'fluidifiassiez', 'hématologistes', 'signifieraient', 'confusionnelle', 'écorniflerions', 'engrossassions', 'désambiguïsons', 'dévitrifieront', 'dépolarisaient', 'croustillèrent', 'dindonneraient', 'retranscrirais', 'dépassionnerez', 'proverbialisez', 'divisionnaires', 'dodécasyllabes', */
 ];
 
 let choices = [];
@@ -27,7 +27,7 @@ const init = () => {
     // console.log(word);
     //  - word mapping
     wordMapping = getWordMapping(word);
-    console.log(wordMapping);
+    // console.log(wordMapping);
     //generate choices
     choices = generateChoices();
     // console.log(choices);
@@ -66,14 +66,46 @@ const init = () => {
     //      - if score == max: loseGame
     //      - if letter are visible : winGame
 const checkLetter = (letter) => {
-    console.log(letter);
+    // console.log(letter);
     let isLetterInWord = false;
-    wordMapping.forEach(() => {
+    let isAllLettersFound = true;
+    wordMapping.forEach((letterMapping) => {
+        // console.log(letterMapping.letter);
         if (letterMapping.letter === letter) {
             letterMapping.isVisible = true;
             isLetterInWord = true;
         }
+        if (!letterMapping.isVisible) {
+            isAllLettersFound = false;
+        }
     });
+    choicesMapping.forEach((letterMapping) => {
+        if (letterMapping.letter === letter) {
+            letterMapping.isChosen = true;
+        } 
+    });
+    displayChoices(choicesMapping);
+    if (isLetterInWord === true) {
+        displayWord(wordMapping);
+    } else {
+        scoreCount++;
+        displayScore();
+    }
+    if (scoreCount === scoreMax) {
+        endGame();
+    }
+    if (isAllLettersFound) {
+        winGame();
+    }
 };
 
+const endGame = () => {
+    wordMapping.forEach(w => w.isVisible = true);
+    displayWord(wordMapping);
+    document.querySelector('body').style.backgroundColor = 'tomato';
+    els.choices.innerHTML = `<h1>You deads</h1>`;
+};
+const winGame = () => {
+    els.choices.innerHTML = `<h1>You live</h1>`;
+};
 window.addEventListener('load', init);
