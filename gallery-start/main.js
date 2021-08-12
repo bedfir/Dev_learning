@@ -13,4 +13,5 @@ for (let index = 1; index < 6; index++) {
 }
 
 
+
 /* Wiring up the Darken/Lighten button */
