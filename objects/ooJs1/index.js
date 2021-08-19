@@ -50,13 +50,15 @@ triangle.calcPerimeter();
 
 //create a class square who inherit from Shape
 class Square extends Shape {
-    constructor(name, sides, sideLength) {
-        super(name, sides, sideLength);
-        
-        this.name = 'Square';
-        this.sides = 4;
+    constructor(sideLength) {
+        super('square',sideLength, sideLength);
     }
     calcArea() {
-
+        let area = this.sideLength * this.sideLength;
+        console.log("The Area of Square is " + area); 
     }
 }
+
+let square1 = new Square(5);
+
+square1.calcArea();
