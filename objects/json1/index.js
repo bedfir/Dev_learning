@@ -33,7 +33,6 @@ function displayCatInfo(catString) {
     }
     kittenInfo  = `There are ${ total } kittens in total, ${ male } males and ${ total - male } females.`;
 
-
     // Don't edit the code below here!
 
     para1.textContent = motherInfo;
