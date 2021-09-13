@@ -1,0 +1,86 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.demo {
+    margin: auto;
+    width: 50%;
+    border: 3px solid green;
+    padding: 10px;
+    text-align: center;
+}
+
+.stopwatch__container {
+    margin: 50px auto;
+    width: 50%;
+    height: 300px;
+    border: 3px solid #DFE1E5;
+    padding: 10px;
+    position: relative;
+}
+
+.stopwatch {
+    font-size: 23px;
+    font-weight: 500;
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    margin-top: -25px;
+    margin-left: -35px;
+}
+
+.btn {
+    background-color: #008CBA;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    position: absolute;
+}
+
+.btn-1 {
+    bottom: 0;
+    left: 5%;
+    background-color: white;
+    color: black;
+    border: 2px solid #4CAF50;
+}
+
+.btn-1:hover {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.btn-2 {
+    bottom: 0;
+    left: 35%;
+    background-color: white;
+    color: black;
+    border: 2px solid tomato;
+    /* margin-right: -25px; */
+}
+
+.btn-2:hover {
+    background-color: tomato;
+    color: white;
+}
+
+.btn-3 {
+    bottom: 0;
+    right: 5%;
+    background-color: white;
+    color: black;
+    border: 2px solid #008CBA;
+}
+
+.btn-3:hover {
+    background-color: #008CBA;
+    color: white;
+}
