@@ -46,6 +46,55 @@ if (!empty($_POST)) {
 }
 ?>
 
+<?php
+
+// Crédentials SQL
+const DB_NAME = "form";
+const DB_USER = "root";
+const DB_PWD = "";
+const SERVER_NAME = "localhost";
+$dsn = "mysql:host=" . SERVER_NAME . ";dbname=" . DB_NAME;
+$options = [
+  PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8'
+];
+
+
+try {
+  $conn = new PDO($dsn, DB_USER, DB_PWD, $options);
+
+  // set the PDO error mode to exception
+  $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+  if ($succes) {
+    // prepare sql and bind parameters
+    $stmt = $conn->prepare("INSERT INTO register (fullName, email, position, pwd, gender) 
+  VALUES (:fullName, :email, :position, :pwd, :gender)");
+    $stmt->bindParam(':fullName', $fullname);
+    $stmt->bindParam(':email', $email);
+    $stmt->bindParam(':position', $position);
+    $stmt->bindParam(':pwd', $pwd);
+    $stmt->bindParam(':gender', $gender);
+
+    // insert a row
+
+    $fullname = $_POST["name"];
+    $email = $_POST["email"];
+    $position = $_POST["position"];
+    $pwd = $_POST["password"];
+    $gender = $_POST["gender"];
+
+    $stmt->execute();
+  }
+
+
+
+  // echo "New records created successfully";
+} catch (PDOException $e) {
+  echo "Error: " . $e->getMessage();
+}
+$conn = null;
+
+?>
 
 
 <body>
@@ -71,7 +120,7 @@ if (!empty($_POST)) {
               </div>
 
               <div class="col-md-12">
-                <select class="form-select mt-3" required>
+                <select class="form-select mt-3" name="position" required>
                   <option selected disabled value="">Position</option>
                   <option value="jweb">Junior Web Developer</option>
                   <option value="sweb">Senior Web Developer</option>
@@ -92,13 +141,13 @@ if (!empty($_POST)) {
               <div class="col-md-12 mt-3">
                 <label class="mb-3 mr-1" for="gender">Gender: </label>
 
-                <input type="radio" class="btn-check" name="gender" id="male" autocomplete="off" required>
+                <input type="radio" class="btn-check" name="gender" value="male" id="male" autocomplete="off" required>
                 <label class="btn btn-sm btn-outline-secondary" for="male">Male</label>
 
-                <input type="radio" class="btn-check" name="gender" id="female" autocomplete="off" required>
+                <input type="radio" class="btn-check" name="gender" value="female" id="female" autocomplete="off" required>
                 <label class="btn btn-sm btn-outline-secondary" for="female">Female</label>
 
-                <input type="radio" class="btn-check" name="gender" id="secret" autocomplete="off" required>
+                <input type="radio" class="btn-check" name="gender" value="secret" id="secret" autocomplete="off" required>
                 <label class="btn btn-sm btn-outline-secondary" for="secret">Secret</label>
                 <div class="valid-feedback mv-up">You selected a gender!</div>
                 <div class="invalid-feedback mv-up">Please select a gender!</div>
